@@ -34,7 +34,7 @@
 #include <cmath>
 #include <ros/ros.h>
 #include <dynamixel.h>
-#include <mx.h>
+#include <axmx.h>
 #include <hexapod_msgs/HeadJoint.h>
 #include <hexapod_msgs/LegsJoints.h>
 
@@ -104,6 +104,8 @@ class ServoDriver
         int write_pos_[SERVO_COUNT];
         bool servos_free_;
         double OFFSET_ANGLE;
+        double RAD_TO_SERVO_RESOLUTION;
+        double SERVO_CENTER_VALUE;
 };
 
 #endif // SERVO_DRIVER_H_
