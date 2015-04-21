@@ -19,7 +19,7 @@
             TARSUS_LENGTH: 0
 
             <!-- Define Angle Offsets in Radians - Usually zero -->
-            OFFSET_ANGLE: !degrees 0
+            OFFSET_ANGLE: !degrees 20
 
             <!-- Define Initial Coxa Offsets in Radians -->
             RR_COXA_ANGLE: !degrees -60
@@ -72,7 +72,7 @@
             LF_INIT_FOOT_POS_X: -134.35
 
             <!-- Distance from ground plane to femur rotation pivot -->
-            FOOT_INIT_Z:         6.0
+            FOOT_INIT_Z:         55.0
         </rosparam>
     <param name="robot_description" command="$(find xacro)/xacro.py '$(find hexapod_description)/urdf/hexapod_model_phantomx.xacro'" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />

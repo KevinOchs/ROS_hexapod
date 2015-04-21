@@ -3,11 +3,11 @@
 
 	<!-- parameters -->
 	<xacro:property name="pi" value="3.1415926535897931" />
-	<xacro:property name="body_length_x" value="0.3556" />
-	<xacro:property name="body_length_y" value="0.165" />
-	<xacro:property name="coxa_length" value="0.05893" />
-	<xacro:property name="femur_length" value="0.10798" />
-	<xacro:property name="tibia_length" value="0.08774" />
+	<xacro:property name="body_length_x" value="0.250" />
+	<xacro:property name="body_length_y" value="0.125" />
+	<xacro:property name="coxa_length" value="0.052" />
+	<xacro:property name="femur_length" value="0.065" />
+	<xacro:property name="tibia_length" value="0.133" />
 
 	<!-- Build the body frame -->
     <link name="footprint" />
@@ -128,12 +128,12 @@
 	</xacro:macro>
 
 <!-- Build robot model -->
-	<xacro:leg side="R" position="R" x="-0.1778" y="-0.0825" angle="-${pi*3/4}" axis="1" />
-	<xacro:leg side="R" position="M" x="0.0" y="-0.13335" angle="-${pi/2}" axis="1" />
-	<xacro:leg side="R" position="F" x="0.1778" y="-0.0825" angle="-${pi/4}" axis="1" />
+	<xacro:leg side="R" position="R" x="-0.120" y="-0.060" angle="-${pi*3/4}" axis="1" />
+	<xacro:leg side="R" position="M" x="0.0" y="-0.100" angle="-${pi/2}" axis="1" />
+	<xacro:leg side="R" position="F" x="0.120" y="-0.060" angle="-${pi/4}" axis="1" />
 
-	<xacro:leg side="L" position="R" x="-0.1778" y="0.0825" angle="${pi*3/4}" axis="-1" />
-	<xacro:leg side="L" position="M" x="0.0" y="0.13335" angle="${pi/2}" axis="-1" />
-	<xacro:leg side="L" position="F" x="0.1778" y="0.0825" angle="${pi/4}" axis="-1" />
+	<xacro:leg side="L" position="R" x="-0.120" y="0.060" angle="${pi*3/4}" axis="-1" />
+	<xacro:leg side="L" position="M" x="0.0" y="0.100" angle="${pi/2}" axis="-1" />
+	<xacro:leg side="L" position="F" x="0.120" y="0.060" angle="${pi/4}" axis="-1" />
 
 </robot>
