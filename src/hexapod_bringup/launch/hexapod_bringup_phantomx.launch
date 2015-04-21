@@ -53,26 +53,26 @@
             <!-- math to find positions of front and back legs POS_Y = Middle leg start position * cos(45) -->
             <!-- math to find positions of front and back legs POS_X = Middle leg start position * sin(45) -->
 
-            RR_INIT_FOOT_POS_Y:  134.35
-            RR_INIT_FOOT_POS_X:  134.35
+            RR_INIT_FOOT_POS_Y:  104.0
+            RR_INIT_FOOT_POS_X:  104.0
 
-            RM_INIT_FOOT_POS_Y:  190.0
+            RM_INIT_FOOT_POS_Y:  147.0
             RM_INIT_FOOT_POS_X:  0
 
-            RF_INIT_FOOT_POS_Y:  134.35
-            RF_INIT_FOOT_POS_X: -134.35
+            RF_INIT_FOOT_POS_Y:  104.0
+            RF_INIT_FOOT_POS_X: -104.0
 
-            LR_INIT_FOOT_POS_Y:  134.35
-            LR_INIT_FOOT_POS_X:  134.35
+            LR_INIT_FOOT_POS_Y:  104.0
+            LR_INIT_FOOT_POS_X:  104.0
 
-            LM_INIT_FOOT_POS_Y:  190.0
+            LM_INIT_FOOT_POS_Y:  147.0
             LM_INIT_FOOT_POS_X:  0
 
-            LF_INIT_FOOT_POS_Y:  134.35
-            LF_INIT_FOOT_POS_X: -134.35
+            LF_INIT_FOOT_POS_Y:  104.0
+            LF_INIT_FOOT_POS_X: -104.0
 
             <!-- Distance from ground plane to femur rotation pivot -->
-            FOOT_INIT_Z:         55.0
+            FOOT_INIT_Z:         30.0
         </rosparam>
     <param name="robot_description" command="$(find xacro)/xacro.py '$(find hexapod_description)/urdf/hexapod_model_phantomx.xacro'" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
