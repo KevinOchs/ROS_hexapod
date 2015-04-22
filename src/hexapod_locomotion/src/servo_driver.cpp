@@ -214,7 +214,7 @@ void ServoDriver::transmitServoPositions( const hexapod_msgs::LegsJoints &legs, 
             dxl_txrx_packet();
 
             // Since we loop until all servos are finished we check here if complete to stop loop
-            if( total_complete == 25 )
+            if( total_complete == SERVO_COUNT )
             {
                 finished = true;
             }
