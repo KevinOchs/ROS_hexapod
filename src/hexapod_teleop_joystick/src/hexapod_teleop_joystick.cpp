@@ -109,7 +109,7 @@ int main(int argc, char** argv)
     ros::AsyncSpinner spinner(1); // Using 4 threads
     spinner.start();
 
-    ros::Rate loop_rate( 2000 ); // 1000 hz
+    ros::Rate loop_rate( 50 ); // 50 hz
     while ( ros::ok() )
     {
         hexapodTeleopJoystick.base_pub_.publish( hexapodTeleopJoystick.base_ );
