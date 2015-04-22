@@ -79,15 +79,15 @@ void ServoDriver::convertAngles( const hexapod_msgs::LegsJoints &legs, const hex
         if( leg_index <= 2 )
         {
             goal_pos_[FIRST_COXA_ID   + leg_index] = SERVO_CENTER_VALUE + round( -legs.leg[leg_index].coxa * RAD_TO_SERVO_RESOLUTION );
-            goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round(  ( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
+            goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
             goal_pos_[FIRST_TIBIA_ID  + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].tibia - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
         }
         else
         // Update Left Legs
         {
             goal_pos_[FIRST_COXA_ID   + leg_index] = SERVO_CENTER_VALUE + round(  legs.leg[leg_index].coxa * RAD_TO_SERVO_RESOLUTION );
-            goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
-            goal_pos_[FIRST_TIBIA_ID  + leg_index] = SERVO_CENTER_VALUE + round(  ( legs.leg[leg_index].tibia - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
+            goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round( ( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
+            goal_pos_[FIRST_TIBIA_ID  + leg_index] = SERVO_CENTER_VALUE + round( ( legs.leg[leg_index].tibia - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
         }
     }
     //Set Head Pan Position
