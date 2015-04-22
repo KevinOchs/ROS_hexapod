@@ -29,6 +29,8 @@
 
 #include <servo_driver.h>
 static const double PI = atan(1.0)*4.0;
+static const double SERVO_CENTER_VALUE = AX_CENTER_VALUE;
+static const double RAD_TO_SERVO_RESOLUTION = ( SERVO_CENTER_VALUE*2 ) / ( (PI*2) - 1.047 /*60 degrees*/);
 
 //=============================================================================
 // Servo ID array ( Does not change )
@@ -39,8 +41,7 @@ static const int servo_id[SERVO_COUNT] =
     RR_COXA_ID,   RM_COXA_ID,   RF_COXA_ID,   LR_COXA_ID,   LM_COXA_ID,   LF_COXA_ID,
     RR_FEMUR_ID,  RM_FEMUR_ID,  RF_FEMUR_ID,  LR_FEMUR_ID,  LM_FEMUR_ID,  LF_FEMUR_ID,
     RR_TIBIA_ID,  RM_TIBIA_ID,  RF_TIBIA_ID,  LR_TIBIA_ID,  LM_TIBIA_ID,  LF_TIBIA_ID,
-    RR_TARSUS_ID, RM_TARSUS_ID, RF_TARSUS_ID, LR_TARSUS_ID, LM_TARSUS_ID, LF_TARSUS_ID,
-    HEAD_PAN_ID
+    HEAD_PAN_ID, HEAD_TILT_ID
 };
 
 //==============================================================================
@@ -52,14 +53,6 @@ ServoDriver::ServoDriver( void )
 {
     int baudnum = 1;
     int deviceIndex = 0;
-
-    //TODO: On create || makeSureServosAreOn detect use of AX or MX servos and set RAD_TO_SERVO_RESOLUTION, SERVO_CENTER_VALUE
-    //If servos are MX
-    SERVO_CENTER_VALUE = MX_CENTER_VALUE;
-    RAD_TO_SERVO_RESOLUTION = ( SERVO_CENTER_VALUE*2 ) / ( PI*2 );
-    //If servos are AX
-    //SERVO_CENTER_VALUE = AX_CENTER_VALUE;
-    //RAD_TO_SERVO_RESOLUTION = ( SERVO_CENTER_VALUE*2 ) / ( PI*2 );
 
     if( dxl_initialize(deviceIndex, baudnum) == 0 )
     {
@@ -88,7 +81,6 @@ void ServoDriver::convertAngles( const hexapod_msgs::LegsJoints &legs, const hex
             goal_pos_[FIRST_COXA_ID   + leg_index] = SERVO_CENTER_VALUE + round( -legs.leg[leg_index].coxa * RAD_TO_SERVO_RESOLUTION );
             goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round(  ( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
             goal_pos_[FIRST_TIBIA_ID  + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].tibia - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
-            goal_pos_[FIRST_TARSUS_ID + leg_index] = SERVO_CENTER_VALUE + round(  ( legs.leg[leg_index].tarsus - OFFSET_ANGLE*2 ) * RAD_TO_SERVO_RESOLUTION );
         }
         else
         // Update Left Legs
@@ -96,10 +88,10 @@ void ServoDriver::convertAngles( const hexapod_msgs::LegsJoints &legs, const hex
             goal_pos_[FIRST_COXA_ID   + leg_index] = SERVO_CENTER_VALUE + round(  legs.leg[leg_index].coxa * RAD_TO_SERVO_RESOLUTION );
             goal_pos_[FIRST_FEMUR_ID  + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].femur - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
             goal_pos_[FIRST_TIBIA_ID  + leg_index] = SERVO_CENTER_VALUE + round(  ( legs.leg[leg_index].tibia - OFFSET_ANGLE ) * RAD_TO_SERVO_RESOLUTION );
-            goal_pos_[FIRST_TARSUS_ID + leg_index] = SERVO_CENTER_VALUE + round( -( legs.leg[leg_index].tarsus - OFFSET_ANGLE*2 ) * RAD_TO_SERVO_RESOLUTION );
         }
     }
-    goal_pos_[24] = SERVO_CENTER_VALUE + round( head.yaw * RAD_TO_SERVO_RESOLUTION );
+    //Set Head Pan Position
+    goal_pos_[SERVO_COUNT-2] = SERVO_CENTER_VALUE + round( head.yaw * RAD_TO_SERVO_RESOLUTION );
 }
 
 //==============================================================================
@@ -117,12 +109,12 @@ void ServoDriver::makeSureServosAreOn( void )
     // Initialize current position as cur since values would be 0 for all servos ( Possibly servos are off till now )
     for( int i = 0; i < SERVO_COUNT; i++ )
     {
-        cur_pos_[i] = dxl_read_word( servo_id[i], AXMX_PRESENT_POSITION_L );
+        cur_pos_[i] = dxl_read_word( servo_id[i], AX_PRESENT_POSITION_L );
         ros::Duration( 0.01 ).sleep();
     }
 
     // Turn torque on
-    dxl_write_word( 254, AXMX_TORQUE_ENABLE, 1 );
+    dxl_write_word( 254, AX_TORQUE_ENABLE, 1 );
     servos_free_ = false;
 }
 
@@ -175,7 +167,7 @@ void ServoDriver::transmitServoPositions( const hexapod_msgs::LegsJoints &legs, 
             dxl_set_txpacket_id( 254 );
             dxl_set_txpacket_instruction( 131 );
             dxl_set_txpacket_length( 5 * SERVO_COUNT + 4 );
-            dxl_set_txpacket_parameter( 0, AXMX_GOAL_POSITION_L );
+            dxl_set_txpacket_parameter( 0, AX_GOAL_POSITION_L );
             dxl_set_txpacket_parameter( 1, 4 );
 
             int total_complete = 0;
@@ -244,7 +236,7 @@ void ServoDriver::transmitServoPositions( const hexapod_msgs::LegsJoints &legs, 
 void ServoDriver::freeServos( void )
 {
     // Turn off torque
-    dxl_write_word( 254, AXMX_TORQUE_ENABLE, 0 );
+    dxl_write_word( 254, AX_TORQUE_ENABLE, 0 );
     servos_free_ = true;
 }
 

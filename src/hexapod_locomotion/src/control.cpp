@@ -59,7 +59,6 @@ Control::Control( void )
         legs_.leg[leg_index].coxa = 0.0;
         legs_.leg[leg_index].femur = 0.0;
         legs_.leg[leg_index].tibia = 0.0;
-        legs_.leg[leg_index].tarsus = 0.0;
     }
     base_sub_ = nh_.subscribe<hexapod_msgs::RootJoint>( "base", 50, &Control::baseCallback, this );
     body_sub_ = nh_.subscribe<hexapod_msgs::BodyJoint>( "body", 50, &Control::bodyCallback, this );
@@ -115,7 +114,6 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
             joint_state_.position[FIRST_COXA_ID   + leg_index] =  legs.leg[leg_index].coxa;
             joint_state_.position[FIRST_FEMUR_ID  + leg_index] =  legs.leg[leg_index].femur + PI/2; // add 90 degrees
             joint_state_.position[FIRST_TIBIA_ID  + leg_index] = -legs.leg[leg_index].tibia;
-            joint_state_.position[FIRST_TARSUS_ID + leg_index] =  legs.leg[leg_index].tarsus + PI/2; // add 90 degrees
         }
         else
         // Update Left Legs
@@ -123,13 +121,11 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
             joint_state_.position[FIRST_COXA_ID   + leg_index] =  legs.leg[leg_index].coxa;
             joint_state_.position[FIRST_FEMUR_ID  + leg_index] = -( legs.leg[leg_index].femur + PI/2 ); // add 90 degrees
             joint_state_.position[FIRST_TIBIA_ID  + leg_index] =  legs.leg[leg_index].tibia;
-            joint_state_.position[FIRST_TARSUS_ID + leg_index] = -( legs.leg[leg_index].tarsus + PI/2 ); // add 90 degrees
         }
 
         joint_state_.name[FIRST_COXA_ID   + leg_index] = "coxa_joint_" + suffix[leg_index];
         joint_state_.name[FIRST_FEMUR_ID  + leg_index] = "femur_joint_" + suffix[leg_index];
         joint_state_.name[FIRST_TIBIA_ID  + leg_index] = "tibia_joint_" + suffix[leg_index];
-        joint_state_.name[FIRST_TARSUS_ID + leg_index] = "tarsus_joint_" + suffix[leg_index];
 
     }
     joint_state_pub_.publish( joint_state_ );

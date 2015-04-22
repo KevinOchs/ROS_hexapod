@@ -19,7 +19,7 @@
             TARSUS_LENGTH: 0
 
             <!-- Define Angle Offsets in Radians - Usually zero -->
-            OFFSET_ANGLE: !degrees 20
+            OFFSET_ANGLE: !degrees 0
 
             <!-- Define Initial Coxa Offsets in Radians -->
             RR_COXA_ANGLE: !degrees -60

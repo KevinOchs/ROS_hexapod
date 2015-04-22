@@ -182,7 +182,6 @@ void Ik::calculateIK( const hexapod_msgs::FeetPositions &feet, const hexapod_msg
         legs->leg[leg_index].coxa = atan2( feet_pos_x, feet_pos_y ) + INIT_COXA_ANGLE[leg_index];
         legs->leg[leg_index].femur = ( PI/2 ) - ( theta + angle_b );
         legs->leg[leg_index].tibia = ( PI/2 ) - angle_c;
-        legs->leg[leg_index].tarsus = legs->leg[leg_index].femur + legs->leg[leg_index].tibia;
     }
 }
 
