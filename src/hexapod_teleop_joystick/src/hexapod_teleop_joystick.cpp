@@ -84,7 +84,8 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         imu_override_.active = true;
         body_.pitch = -joy->axes[1] * 0.13962634; // 8 degrees max
         body_.roll = -joy->axes[0] * 0.13962634; // 8 degrees max
-        head_.yaw = joy->axes[2] * 0.27925268; // 16 degrees max
+        head_.yaw = joy->axes[2] * 0.959931089; // 55 degrees max
+        head_.pitch = joy->axes[3] * 0.27925268; //16 degrees max
     }
     else
     {
@@ -106,7 +107,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "hexapod_teleop_joystick");
     HexapodTeleopJoystick hexapodTeleopJoystick;
 
-    ros::AsyncSpinner spinner(1); // Using 4 threads
+    ros::AsyncSpinner spinner(1); // Using 1 thread
     spinner.start();
 
     ros::Rate loop_rate( 50 ); // 50 hz

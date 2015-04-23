@@ -9,7 +9,7 @@
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" output="screen" />
         <rosparam>
             <!-- Gait Settings -->
-            CYCLE_LENGTH: 50
+            CYCLE_LENGTH: 10
             LEG_LIFT_HEIGHT: 25
 
             <!-- Define Leg Measurements in mm -->

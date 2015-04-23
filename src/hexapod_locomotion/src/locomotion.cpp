@@ -58,7 +58,8 @@ int main( int argc, char **argv )
         // Start button on controller has been pressed stand up
         if( control.getHexActiveState() == true && control.getPrevHexActiveState() == false )
         {
-            while( control.body_.z < 90 )
+            ROS_INFO("Hexapod wants to stand up.");
+            while( control.body_.z < 75 )
             {
                 control.body_.z++;
 
