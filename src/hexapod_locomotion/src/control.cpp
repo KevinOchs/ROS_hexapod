@@ -243,19 +243,19 @@ void Control::imuCallback( const sensor_msgs::ImuConstPtr &imu_msg )
 
         if( imu_init_stored_ == false )
         {
-            imu_roll_init_ = -atan2( lin_acc.x, sqrt( lin_acc.y * lin_acc.y + lin_acc.z * lin_acc.z ) );
-            imu_pitch_init_ = -atan2( lin_acc.y, lin_acc.z );
-            imu_pitch_init_ = ( imu_pitch_init_ >= 0 ) ? ( PI - imu_pitch_init_ ) : ( -imu_pitch_init_ - PI );
+            imu_roll_init_ = -atan2( lin_acc.y, sqrt( lin_acc.x * lin_acc.x + lin_acc.z * lin_acc.z ) );
+            imu_pitch_init_ = -atan2( lin_acc.x, lin_acc.z );
+            //imu_pitch_init_ = ( imu_pitch_init_ >= 0 ) ? ( PI - imu_pitch_init_ ) : ( -imu_pitch_init_ - PI );
             imu_init_stored_ = true;
         }
 
-        imu_roll_lowpass_ = lin_acc.x * 0.01 + ( imu_roll_lowpass_ * ( 1.0 - 0.01 ) );
-        imu_pitch_lowpass_ = lin_acc.y * 0.01 + ( imu_pitch_lowpass_ * ( 1.0 - 0.01 ) );
-        imu_yaw_lowpass_ = lin_acc.z * 0.01 + ( imu_yaw_lowpass_ * ( 1.0 - 0.01 ) );
+        imu_roll_lowpass_ = lin_acc.y * 0.1 + ( imu_roll_lowpass_ * ( 1.0 - 0.1 ) );
+        imu_pitch_lowpass_ = lin_acc.x * 0.1 + ( imu_pitch_lowpass_ * ( 1.0 - 0.1 ) );
+        imu_yaw_lowpass_ = lin_acc.z * 0.1 + ( imu_yaw_lowpass_ * ( 1.0 - 0.1 ) );
 
         double imu_roll = -atan2( imu_roll_lowpass_, sqrt( imu_pitch_lowpass_ * imu_pitch_lowpass_ + imu_yaw_lowpass_ * imu_yaw_lowpass_ ) );
         double imu_pitch = -atan2( imu_pitch_lowpass_, imu_yaw_lowpass_ );
-        imu_pitch = ( imu_pitch >= 0 ) ? ( PI - imu_pitch ) : ( -imu_pitch - PI );
+        //imu_pitch = ( imu_pitch >= 0 ) ? ( PI - imu_pitch ) : ( -imu_pitch - PI );
 
         double imu_roll_delta = imu_roll_init_ - imu_roll;
         double imu_pitch_delta = imu_pitch_init_ - imu_pitch;
@@ -269,33 +269,33 @@ void Control::imuCallback( const sensor_msgs::ImuConstPtr &imu_msg )
 
         if( imu_roll_delta < -0.0174532925 ) // 1 degree
         {
-            if( body_.roll < 0.209 )  // 12 degrees limit
+            if( body_.roll < 0.13962634 )  // 8 degrees limit
             {
-                body_.roll = body_.roll + 0.0002; // 0.01 degree increments
+                body_.roll += 0.00436; //0.25 degree increments
             }
         }
 
         if( imu_roll_delta > 0.0174532925 ) // 1 degree
         {
-            if( body_.roll > -0.209 )  // 12 degrees limit
+            if( body_.roll > -0.13962634 )  // 8 degrees limit
             {
-                body_.roll = body_.roll - 0.0002;  // 0.01 degree increments
+                body_.roll -= 0.00436; //0.25 degree increments
             }
         }
 
         if( imu_pitch_delta < -0.0174532925 ) // 1 degree
         {
-            if( body_.pitch < 0.209 )  // 12 degrees limit
+            if( body_.pitch < 0.13962634 )  // 8 degrees limit
             {
-                body_.pitch = body_.pitch + 0.0002;  // 0.01 degree increments
+                body_.pitch += 0.00436; //0.25 degree increments
             }
         }
 
         if( imu_pitch_delta > 0.0174532925 ) // 1 degree
         {
-            if( body_.pitch > -0.209 ) // 12 degrees limit
+            if( body_.pitch > -0.13962634 ) // 8 degrees limit
             {
-                body_.pitch = body_.pitch - 0.0002;  // 0.01 degree increments
+                body_.pitch -= 0.00436; //0.25 degree increments
             }
         }
     }
