@@ -47,9 +47,9 @@ HexapodOdometry::HexapodOdometry( void )
 
 void HexapodOdometry::odometryCallback( const hexapod_msgs::RootJointConstPtr &base_msg )
 {
-    vx = -base_msg->x / 1000; // FLIPPING SO IT WORKS SO NEED TO FIX THE MATH
-    vy = base_msg->y / 1000;
-    vth = -base_msg->yaw * 3.75; // FLIPPING SO IT WORKS SO NEED TO FIX THE MATH
+    vx = -base_msg->x / 500; // FLIPPING SO IT WORKS SO NEED TO FIX THE MATH
+    vy = base_msg->y / 500;
+    vth = -base_msg->yaw * 6.75; // FLIPPING SO IT WORKS SO NEED TO FIX THE MATH
 }
 
 int main(int argc, char** argv)
