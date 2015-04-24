@@ -4,7 +4,9 @@
 <launch>
     <node name="Sound_Play" pkg="sound_play" type="soundplay_node.py"/>
     <node name="Hexapod_Sounds" pkg="hexapod_sound" type="hexapod_sound" />
-    <node name="Playstation3Controller" pkg="joy" type="joy_node" />
+    <node name="Playstation3Controller" pkg="joy" type="joy_node">
+        <param name="dev" value="/dev/input/js0"/>
+    </node>
     <node name="Hexapod_Teleop_Joystick" pkg="hexapod_teleop_joystick" type="hexapod_teleop_joystick" />
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" />
         <rosparam>
