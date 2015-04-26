@@ -5,14 +5,14 @@
     <node name="Sound_Play" pkg="sound_play" type="soundplay_node.py"/>
     <node name="Hexapod_Sounds" pkg="hexapod_sound" type="hexapod_sound" />
     <node name="Playstation3Controller" pkg="joy" type="joy_node">
-        <param name="dev" value="/dev/input/js1"/>
+        <param name="dev" value="/dev/input/js0"/>
         <param name="deadzone" value="0.15"/>
     </node>
     <node name="Hexapod_Teleop_Joystick" pkg="hexapod_teleop_joystick" type="hexapod_teleop_joystick" />
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" />
         <rosparam>
             <!-- Gait Settings -->
-            CYCLE_LENGTH:           10
+            CYCLE_LENGTH:           25
             LEG_LIFT_HEIGHT:        25
 
             <!-- Define Leg Measurements in mm -->

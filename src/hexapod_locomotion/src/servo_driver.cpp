@@ -163,7 +163,7 @@ void ServoDriver::transmitServoPositions( const hexapod_msgs::LegsJoints &legs, 
         }
 
         bool finished = false;
-        ros::Rate loop_rate( 900 ); // 900 Hz loop
+        ros::Rate loop_rate( 500 ); // 500 Hz loop
         while( finished == false )
         {
             // Prepare packet for broadcast
