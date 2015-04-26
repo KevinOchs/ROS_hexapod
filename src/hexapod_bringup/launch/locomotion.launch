@@ -5,76 +5,54 @@
     <node name="Sound_Play" pkg="sound_play" type="soundplay_node.py"/>
     <node name="Hexapod_Sounds" pkg="hexapod_sound" type="hexapod_sound" />
     <node name="Playstation3Controller" pkg="joy" type="joy_node">
-        <param name="dev" value="/dev/input/js0"/>
+        <param name="dev" value="/dev/input/js1"/>
         <param name="deadzone" value="0.15"/>
     </node>
     <node name="Hexapod_Teleop_Joystick" pkg="hexapod_teleop_joystick" type="hexapod_teleop_joystick" />
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" />
         <rosparam>
             <!-- Gait Settings -->
-            CYCLE_LENGTH: 10
-            LEG_LIFT_HEIGHT: 25
+            CYCLE_LENGTH:           10
+            LEG_LIFT_HEIGHT:        25
 
             <!-- Define Leg Measurements in mm -->
-            COXA_LENGTH:   52.0
-            FEMUR_LENGTH:  65.0
-            TIBIA_LENGTH:  133.0
-            TARSUS_LENGTH: 0
+            COXA_LENGTH:            52.0
+            FEMUR_LENGTH:           65.0
+            TIBIA_LENGTH:           133.0
+            TARSUS_LENGTH:          0
 
             <!-- Define Angle Offsets in Radians - Usually zero -->
-            OFFSET_ANGLE: !degrees 0
+            OFFSET_ANGLE:           0
 
             <!-- Define Initial Coxa Offsets in Radians -->
-            RR_COXA_ANGLE: !degrees -60
-            RM_COXA_ANGLE: 0
-            RF_COXA_ANGLE: !degrees 60
-            LR_COXA_ANGLE: !degrees -60
-            LM_COXA_ANGLE: 0
-            LF_COXA_ANGLE: !degrees 60
+            FRONT_COXA_ANGLE:       !degrees 45
+            MID_COXA_ANGLE:         0
+            REAR_COXA_ANGLE:        !degrees -45
 
-            <!-- Define distance in mm from center of the axis of the coxa joint -->
-            RR_OFFSET_X:  120.0
-            RR_OFFSET_Y: -60.0
+            <!-- Define distance in mm from coxa joint to the center-->
+            FRONT_COXA_TO_CENTER_X: 120.0
+            FRONT_COXA_TO_CENTER_Y: 60.0
 
-            RM_OFFSET_X:  0.0
-            RM_OFFSET_Y: -100.0
+            MID_COXA_TO_CENTER_X:   0.0
+            MID_COXA_TO_CENTER_Y:   100.0
 
-            RF_OFFSET_X: -120.0
-            RF_OFFSET_Y: -60.0
-
-            LR_OFFSET_X:  120.0
-            LR_OFFSET_Y:  60.0
-
-            LM_OFFSET_X:  0.0
-            LM_OFFSET_Y:  100.0
-
-            LF_OFFSET_X: -120.0
-            LF_OFFSET_Y:  60.0
+            REAR_COXA_TO_CENTER_X:  -120.0
+            REAR_COXA_TO_CENTER_Y:  60.0
 
             <!-- Define Start Position Of Feet in mm from the coxa joint -->
-            <!-- Middle Legs is body center to foot -->
+            <!-- Middle Legs is coxa axis to foot -->
             <!-- math to find positions of front and back legs POS_Y = Middle leg start position * cos(45) -->
             <!-- math to find positions of front and back legs POS_X = Middle leg start position * sin(45) -->
+            FRONT_INIT_FOOT_POS_X:  104.0
+            FRONT_INIT_FOOT_POS_Y:  104.0
 
-            RR_INIT_FOOT_POS_Y:  104.0
-            RR_INIT_FOOT_POS_X:  104.0
+            MID_INIT_FOOT_POS_X:    0.0
+            MID_INIT_FOOT_POS_Y:    147.00
 
-            RM_INIT_FOOT_POS_Y:  147.0
-            RM_INIT_FOOT_POS_X:  0
-
-            RF_INIT_FOOT_POS_Y:  104.0
-            RF_INIT_FOOT_POS_X: -104.0
-
-            LR_INIT_FOOT_POS_Y:  104.0
-            LR_INIT_FOOT_POS_X:  104.0
-
-            LM_INIT_FOOT_POS_Y:  147.0
-            LM_INIT_FOOT_POS_X:  0
-
-            LF_INIT_FOOT_POS_Y:  104.0
-            LF_INIT_FOOT_POS_X: -104.0
+            REAR_INIT_FOOT_POS_X:   -104.0
+            REAR_INIT_FOOT_POS_Y:   104.0
 
             <!-- Distance from ground plane to femur rotation pivot -->
-            FOOT_INIT_Z:         30.0
+            ALL_FOOT_INIT_Z:        30.0
         </rosparam>
 </launch>
