@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Remote Viewing launch file -->
-
-<launch>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_description)/rviz_prefs/urdf.rviz" />
-</launch>
-
