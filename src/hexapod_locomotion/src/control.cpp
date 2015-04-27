@@ -40,6 +40,9 @@ Control::Control( void )
     hex_state_ = false;
     imu_init_stored_ = false;
     imu_override_.active = false;
+    imu_pitch_lowpass_ = 0;
+    imu_roll_lowpass_ = 0;
+    imu_yaw_lowpass_ = 0;
     base_.y = 0.0;
     base_.x = 0.0;
     base_.yaw = 0.0;
