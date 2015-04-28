@@ -1,9 +1,9 @@
-<!-- RPi bringup launch file -->
+<!-- RPi2 bringup launch file -->
 
 <launch>
     <include file="$(find hexapod_bringup)/launch/locomotion.launch" />
     <param name="robot_description" command="$(find xacro)/xacro.py '$(find hexapod_description)/urdf/hexapod_model_phantomx.xacro'" />
-    <node name="Hexapod_Odometry" pkg="hexapod_odometry" type="hexapod_odometry" />
+    <!--<node name="Hexapod_Odometry" pkg="hexapod_odometry" type="hexapod_odometry" />-->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
     <include file="$(find hexapod_bringup)/launch/imu.launch" />
     <include file="$(find hexapod_bringup)/launch/depth_laserscan.launch" />
