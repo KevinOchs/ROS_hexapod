@@ -9,11 +9,15 @@
         <param name="deadzone" value="0.15"/>
     </node>
     <node name="Hexapod_Teleop_Joystick" pkg="hexapod_teleop_joystick" type="hexapod_teleop_joystick" />
-    <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" />
+        <rosparam>
+            MAX_METERS_PER_SEC: 0.078
+            MAX_RADIANS_PER_SEC: 0.407
+        </rosparam>
+    <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" output="screen" />
         <rosparam>
             <!-- Gait Settings -->
-            CYCLE_LENGTH:           25
-            LEG_LIFT_HEIGHT:        25
+            CYCLE_LENGTH:           50
+            LEG_LIFT_HEIGHT:        40
 
             <!-- Define Leg Measurements in mm -->
             COXA_LENGTH:            52.0
