@@ -278,19 +278,19 @@ void Control::imuCallback( const sensor_msgs::ImuConstPtr &imu_msg )
 
         if( imu_init_stored_ == false )
         {
-            imu_roll_init_ = atan2( lin_acc.x, sqrt( lin_acc.y * lin_acc.y + lin_acc.z * lin_acc.z ) );
-            imu_pitch_init_ = atan2( lin_acc.y, lin_acc.z );
-            imu_pitch_init_ = ( imu_pitch_init_ >= 0.0 ) ? ( PI - imu_pitch_init_ ) : ( -imu_pitch_init_ - PI );
+            imu_roll_init_ = -atan2( lin_acc.y, sqrt( lin_acc.x * lin_acc.x + lin_acc.z * lin_acc.z ) );
+            imu_pitch_init_ = -atan2( lin_acc.x, lin_acc.z );
+            //imu_pitch_init_ = ( imu_pitch_init_ >= 0.0 ) ? ( PI - imu_pitch_init_ ) : ( -imu_pitch_init_ - PI );
             imu_init_stored_ = true;
         }
 
-        imu_roll_lowpass_ = lin_acc.x * 0.01 + ( imu_roll_lowpass_ * ( 1.0 - 0.01 ) );
-        imu_pitch_lowpass_ = lin_acc.y * 0.01 + ( imu_pitch_lowpass_ * ( 1.0 - 0.01 ) );
+        imu_roll_lowpass_ = lin_acc.y * 0.01 + ( imu_roll_lowpass_ * ( 1.0 - 0.01 ) );
+        imu_pitch_lowpass_ = lin_acc.x * 0.01 + ( imu_pitch_lowpass_ * ( 1.0 - 0.01 ) );
         imu_yaw_lowpass_ = lin_acc.z * 0.01 + ( imu_yaw_lowpass_ * ( 1.0 - 0.01 ) );
 
-        double imu_roll = atan2( imu_roll_lowpass_, sqrt( imu_pitch_lowpass_ * imu_pitch_lowpass_ + imu_yaw_lowpass_ * imu_yaw_lowpass_ ) );
-        double imu_pitch = atan2( imu_pitch_lowpass_, imu_yaw_lowpass_ );
-        imu_pitch = ( imu_pitch >= 0.0 ) ? ( PI - imu_pitch ) : ( -imu_pitch - PI );
+        double imu_roll = -atan2( imu_roll_lowpass_, sqrt( imu_pitch_lowpass_ * imu_pitch_lowpass_ + imu_yaw_lowpass_ * imu_yaw_lowpass_ ) );
+        double imu_pitch = -atan2( imu_pitch_lowpass_, imu_yaw_lowpass_ );
+        //imu_pitch = ( imu_pitch >= 0.0 ) ? ( PI - imu_pitch ) : ( -imu_pitch - PI );
 
         double imu_roll_delta = imu_roll_init_ - imu_roll;
         double imu_pitch_delta = imu_pitch_init_ - imu_pitch;
