@@ -37,21 +37,49 @@
 			</visual>
 	</link>
 
+	<joint name="head_pan_joint" type="revolute">
+		<parent link="body_link"/>
+		<child link="head_pan_link"/>
+		<axis xyz="0 0 1" />
+		<origin xyz="0.145 0.0 0.080" />
+		<limit lower="-${3.14}" upper="${3.14}" effort="10000" velocity="100" />
+	</joint>
+
+	<link name="head_pan_link"/>
+
+	<joint name="head_tilt_joint" type="revolute">
+		<parent link="head_pan_link"/>
+		<child link="head_tilt_link"/>
+		<axis xyz="0 1 0" />
+		<origin xyz="0.0 0.0 0.020" />
+		<limit lower="-${3.14}" upper="${3.14}" effort="10000" velocity="100" />
+	</joint>
+
+	<link name="head_tilt_link"/>
+
 	<joint name="camera_rgb_joint" type="fixed">
-		<parent link="body_link" />
+		<parent link="head_tilt_link" />
 		<child link="camera_rgb_link" />
-		<origin xyz="0.150 0.0255 0.034" rpy="${pi/2} ${pi} ${pi/2}" />
+		<origin xyz="0.0 0.0 0.0" rpy="${pi/2} ${pi} ${pi/2}" />
 	</joint>
 	
 	<link name="camera_rgb_link" />
 
 	<joint name="camera_depth_joint" type="fixed">
-		<parent link="body_link" />
+		<parent link="head_tilt_link" />
 		<child link="camera_depth_link" />
-		<origin xyz="0.135 0.065 0.080" rpy="${pi/2} ${pi} ${pi/2}" />
+		<origin xyz="0.0 0.0 0.0" rpy="${pi/2} ${pi} ${pi/2}" />
 	</joint>
 	
 	<link name="camera_depth_link" />
+
+<joint name="camera_depth_frame" type="fixed">
+	<parent link="head_tilt_link" />
+	<child link="camera_depth_frame_link" />
+	<origin xyz="0.0 0.0 0.0" />
+</joint>
+
+<link name="camera_depth_frame_link" />
 
 	<joint name="imu_joint" type="fixed">
 		<parent link="base_footprint" />

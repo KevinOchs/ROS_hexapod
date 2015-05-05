@@ -102,13 +102,15 @@ bool Control::getPrevHexActiveState( void )
 #define FIRST_TIBIA_ID    12
 #define FIRST_TARSUS_ID   18
 
+#define SERVO_COUNT       20 //TODO: I do not like having to redefine but do we want to include servo_driver.h?
+
 const std::string suffix[6] = {"RR", "RM", "RF", "LR", "LM", "LF"};
 
-void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const hexapod_msgs::BodyJoint &body )
+void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const hexapod_msgs::BodyJoint &body, const hexapod_msgs::HeadJoint &head )
 {
     joint_state_.header.stamp = ros::Time::now();
-    joint_state_.name.resize( 24 );
-    joint_state_.position.resize( 24 );
+    joint_state_.name.resize( SERVO_COUNT );
+    joint_state_.position.resize( SERVO_COUNT );
     for( int leg_index = 0; leg_index <= 5; leg_index++ )
     {
         // Update Right Legs
@@ -131,6 +133,12 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
         joint_state_.name[FIRST_TIBIA_ID  + leg_index] = "tibia_joint_" + suffix[leg_index];
 
     }
+
+    joint_state_.name[SERVO_COUNT-2] = "head_pan_joint";
+    joint_state_.position[SERVO_COUNT-2] = head.yaw;
+    joint_state_.name[SERVO_COUNT-1] = "head_tilt_joint";
+    joint_state_.position[SERVO_COUNT-1] = head.pitch;
+
     joint_state_pub_.publish( joint_state_ );
     joint_state_.name.clear();
     joint_state_.position.clear();

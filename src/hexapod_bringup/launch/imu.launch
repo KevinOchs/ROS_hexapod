@@ -2,9 +2,9 @@
 <launch>
     <node pkg="nodelet" type="nodelet" name="imu_manager" args="manager" output="screen" />
 
-    <node pkg="um7" type="um7_driver" name="um7_driver">
+    <node pkg="um7" type="um7_driver" name="um7_driver" output="screen">
         <param name="baud" value="115200"/>
-        <param name="port" value="/dev/ttyAMA0"/>
+        <param name="port" value="/dev/ttyUSB0"/>
         <param name="frame_id" value="imu_link"/>
     </node>
 
