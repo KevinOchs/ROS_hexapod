@@ -151,7 +151,7 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
     joint_state_.name[SERVO_COUNT-2] = "head_pan_joint";
     joint_state_.position[SERVO_COUNT-2] = head.yaw;
     joint_state_.name[SERVO_COUNT-1] = "head_tilt_joint";
-    joint_state_.position[SERVO_COUNT-1] = head.pitch;
+    joint_state_.position[SERVO_COUNT-1] = -head.pitch; //RL - Inverted pitch on joint state?
 
     joint_state_pub_.publish( joint_state_ );
     joint_state_.name.clear();
@@ -198,7 +198,7 @@ void Control::bodyCallback( const hexapod_msgs::BodyJointConstPtr &body_msg )
 }
 
 //==============================================================================
-// Pan head callback
+// Pan & Tilt head callback
 //==============================================================================
 
 void Control::headCallback( const hexapod_msgs::HeadJointConstPtr &head_msg )

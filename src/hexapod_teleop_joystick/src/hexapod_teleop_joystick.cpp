@@ -87,14 +87,14 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         }
     }
 
-    // Body shift L1 Button for testing
-    if ( joy->buttons[8] == 1 )
+    // Body shift L1 Button for testing on DS4 controller
+    if ( joy->buttons[4] == 1 )
     {
         imu_override_.active = true;
         body_.pitch = -joy->axes[1] * 0.13962634; // 8 degrees max
         body_.roll = -joy->axes[0] * 0.13962634; // 8 degrees max
         head_.yaw = joy->axes[2] * 0.959931089; // 55 degrees max
-        head_.pitch = joy->axes[3] * 0.27925268; //16 degrees max
+        head_.pitch = joy->axes[5] * 0.27925268; //16 degrees max
     }
     else
     {
@@ -102,7 +102,7 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
     }
 
     // Travelling ( 8cm/s ) 0.078m/s  0.407rad/s
-    if ( joy->buttons[8] != 1 )
+    if ( joy->buttons[4] != 1 )
     {
         base_.x = -joy->axes[1] * 40.0; // 40 mm max
         base_.y = joy->axes[0] * 40.0; // 40 mm max
