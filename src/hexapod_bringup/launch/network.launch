@@ -1,16 +1,5 @@
 <!-- Networked computer bringup launch file -->
 
 <launch>
-    <node name="Hexapod_Odometry" pkg="hexapod_odometry" type="hexapod_odometry" />
-	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
-        <param name="base_frame" value="base_footprint"/>
-        <param name="odom_frame" value="odom_combined"/>
-        <param name="maxUrange" value="3.0"/>
-        <param name="maxRange" value="3.1"/>
-        <param name="linearUpdate" value="0.2"/>
-    </node>
-    <!--Sound Play is temporary until I get the Pi's audio and ROS to be friends-->
-    <node name="Sound_Play" pkg="sound_play" type="soundplay_node.py"/>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_description)/rviz_prefs/urdf.rviz" />
 </launch>
-

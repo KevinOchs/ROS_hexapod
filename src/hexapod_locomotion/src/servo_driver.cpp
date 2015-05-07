@@ -45,8 +45,8 @@ static const int servo_id[SERVO_COUNT] =
 };
 
 //==============================================================================
-//  Constructor: Open USB2AX and read current servo positions if they have power
-// If servos are not on, no worries we read them again later just to be safe
+//  Constructor: Open USB2AX and 
+// If servos are not on, no worries we read them later just to be safe
 //==============================================================================
 
 ServoDriver::ServoDriver( void )
@@ -65,6 +65,13 @@ ServoDriver::ServoDriver( void )
     servos_free_ = true;
 
     ros::param::get("OFFSET_ANGLE", OFFSET_ANGLE );
+    for( int i = 0; i < SERVO_COUNT; i++ )
+    {
+        cur_pos_[i] = AX_CENTER_VALUE;
+        goal_pos_[i] = AX_CENTER_VALUE;
+        write_pos_[i] = AX_CENTER_VALUE;
+        pose_steps_[i] = 1;
+    }
 }
 
 //==============================================================================
@@ -109,16 +116,16 @@ void ServoDriver::makeSureServosAreOn( void )
         return;
     }
 
+    // Turn torque on
+    dxl_write_word( 254, AX_TORQUE_ENABLE, 1 );
+    servos_free_ = false;
+    ros::Duration( 0.5 ).sleep();
+
     // Initialize current position as cur since values would be 0 for all servos ( Possibly servos are off till now )
     for( int i = 0; i < SERVO_COUNT; i++ )
     {
         cur_pos_[i] = dxl_read_word( servo_id[i], AX_PRESENT_POSITION_L );
-        ros::Duration( 0.01 ).sleep();
     }
-
-    // Turn torque on
-    dxl_write_word( 254, AX_TORQUE_ENABLE, 1 );
-    servos_free_ = false;
 }
 
 //==============================================================================
