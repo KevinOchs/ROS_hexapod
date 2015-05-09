@@ -116,7 +116,8 @@ void ServoDriver::makeSureServosAreOn( void )
         return;
     }
 
-    // Turn torque on
+    // Turn torque on before reading the positions
+    // This is proven to provide less erroneous values
     dxl_write_word( 254, AX_TORQUE_ENABLE, 1 );
     servos_free_ = false;
     ros::Duration( 0.5 ).sleep();
@@ -125,6 +126,24 @@ void ServoDriver::makeSureServosAreOn( void )
     for( int i = 0; i < SERVO_COUNT; i++ )
     {
         cur_pos_[i] = dxl_read_word( servo_id[i], AX_PRESENT_POSITION_L );
+
+        int servoSaverTolerance = 3; //A servo's position should not vary more than this amount 
+        int servoSaverPos = dxl_read_word( servo_id[i], AX_PRESENT_POSITION_L );
+
+        if( abs( cur_pos_[i] - servoSaverPos ) > servoSaverTolerance )
+        {
+            ROS_WARN( "ServoDriver::Servo ID %d reported positions %d and %d sequentially", servo_id[i], cur_pos_[i], servoSaverPos );
+
+            //We are going to average the values and see what we get...
+            cur_pos_[i] = (cur_pos_[i] + servoSaverPos) / 2;
+            for( int j = 0; j < 10; j++ )
+            {
+                servoSaverPos = dxl_read_word( servo_id[i], AX_PRESENT_POSITION_L );
+                cur_pos_[i] = (cur_pos_[i] + servoSaverPos) / 2;
+            }
+
+            ROS_WARN( "ServoDriver::Servo ID %d using average position of %d", servo_id[i], cur_pos_[i] );
+        }
     }
 }
 
