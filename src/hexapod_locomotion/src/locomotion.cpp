@@ -52,7 +52,7 @@ int main( int argc, char **argv )
     // Establish initial leg positions for default pose in robot publisher
     ik.calculateIK( control.feet_, control.body_, &control.legs_ );
     
-    ros::AsyncSpinner spinner(2); // Using 2 threads
+    ros::AsyncSpinner spinner( 2 ); // Using 2 threads
     spinner.start();
     ros::Rate loop_rate( 1000 ); // 1000 hz
     while( ros::ok() )

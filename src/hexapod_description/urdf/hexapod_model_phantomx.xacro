@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="PhantomX">
 
 	<!-- parameters -->
@@ -9,21 +10,13 @@
 	<xacro:property name="femur_length" value="0.065" />
 	<xacro:property name="tibia_length" value="0.133" />
 
-	<link name="base_footprint" />
-
-	<joint name="footprint_joint" type="fixed">
-		<parent link="base_footprint"/>
-		<child link="base_link"/>
-		<origin xyz="0 0 0" rpy="0 0 0" /> 	
-    </joint>
-
 	<link name="base_link" />
-	
-	<joint name="base_joint" type="fixed">
-		<parent link="base_link" />
-		<child link="body_link" />
-		<origin xyz="0 0 0" rpy="0 0 0" />
-	</joint>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="body_link" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
 
 	<link name="body_link">
 			<visual>
@@ -37,6 +30,7 @@
 			</visual>
 	</link>
 
+	<!-- Head Pan and Tilt properties -->
 	<joint name="head_pan_joint" type="revolute">
 		<parent link="body_link"/>
 		<child link="head_pan_link"/>
@@ -44,7 +38,6 @@
 		<origin xyz="0.145 0.0 0.080" />
 		<limit lower="-${3.14}" upper="${3.14}" effort="10000" velocity="100" />
 	</joint>
-
 	<link name="head_pan_link"/>
 
 	<joint name="head_tilt_joint" type="revolute">
@@ -54,24 +47,22 @@
 		<origin xyz="0.0 0.0 0.020" />
 		<limit lower="-${3.14}" upper="${3.14}" effort="10000" velocity="100" />
 	</joint>
-
 	<link name="head_tilt_link"/>
 
+	<!-- Camera properties -->
 	<joint name="camera_rgb_joint" type="fixed">
 		<parent link="head_tilt_link" />
-		<child link="camera_rgb_link" />
+		<child link="camera_rgb_optical_frame" />
 		<origin xyz="0.0 0.0 0.0" rpy="${pi/2} ${pi} ${pi/2}" />
 	</joint>
-	
-	<link name="camera_rgb_link" />
+	<link name="camera_rgb_optical_frame" />
 
 	<joint name="camera_depth_joint" type="fixed">
 		<parent link="head_tilt_link" />
-		<child link="camera_depth_link" />
+		<child link="camera_depth_optical_frame" />
 		<origin xyz="0.0 0.0 0.0" rpy="${pi/2} ${pi} ${pi/2}" />
 	</joint>
-	
-	<link name="camera_depth_link" />
+	<link name="camera_depth_optical_frame" />
 
 <joint name="camera_depth_frame" type="fixed">
 	<parent link="head_tilt_link" />
@@ -81,12 +72,12 @@
 
 <link name="camera_depth_frame_link" />
 
+	<!-- IMU properties -->
 	<joint name="imu_joint" type="fixed">
-		<parent link="base_footprint" />
+		<parent link="base_link" />
 		<child link="imu_link" />
 		<origin xyz="0 0 0" rpy="0 0 0" />
 	</joint>
-	
 	<link name="imu_link" />
 	
 	<!-- Joint properties -->
