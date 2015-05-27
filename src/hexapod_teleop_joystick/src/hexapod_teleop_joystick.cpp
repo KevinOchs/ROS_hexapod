@@ -71,6 +71,10 @@ HexapodTeleopJoystick::HexapodTeleopJoystick( void )
 
 void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
 {
+    joy_X_lowpass_ = joy->axes[1] * 0.001 + ( joy->axes[1] * ( 1.0 - 0.001 ) );
+    joy_Y_lowpass_ = joy->axes[0] * 0.001 + ( joy->axes[0] * ( 1.0 - 0.001 ) );
+    joy_Z_lowpass_ = joy->axes[2] * 0.001 + ( joy->axes[2] * ( 1.0 - 0.001 ) );
+
     if ( joy->buttons[3] == 1 )
     {
         if ( state_.active == false)
@@ -91,9 +95,9 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
     if ( joy->buttons[4] == 1 )
     {
         imu_override_.active = true;
-        body_.pitch = -joy->axes[1] * 0.13962634; // 8 degrees max
-        body_.roll = -joy->axes[0] * 0.13962634; // 8 degrees max
-        head_.yaw = joy->axes[2] * 0.959931089; // 55 degrees max
+        body_.pitch = -joy_X_lowpass_ * 0.13962634; // 8 degrees max
+        body_.roll = -joy_Y_lowpass_ * 0.13962634; // 8 degrees max
+        head_.yaw = joy_Z_lowpass_ * 0.959931089; // 55 degrees max
         head_.pitch = joy->axes[5] * 0.27925268; //16 degrees max
     }
     else
@@ -104,12 +108,12 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
     // Travelling ( 8cm/s ) 0.078m/s  0.407rad/s
     if ( joy->buttons[4] != 1 )
     {
-        base_.x = -joy->axes[1] * 40.0; // 40 mm max
-        base_.y = joy->axes[0] * 40.0; // 40 mm max
-        base_.yaw = -joy->axes[2] * 0.13962634; // 8 degrees max
-        cmd_vel_.linear.x = ( joy->axes[1] * MAX_METERS_PER_SEC ); // 0.04m/s max
-        cmd_vel_.linear.y = ( joy->axes[0] * MAX_METERS_PER_SEC ); // 0.04m/s max
-        cmd_vel_.angular.z = ( joy->axes[2] * MAX_RADIANS_PER_SEC ); // 0.52359rad/s max
+        base_.x = -joy_X_lowpass_ * 40.0; // 40 mm max
+        base_.y = joy_Y_lowpass_ * 40.0; // 40 mm max
+        base_.yaw = -joy_Z_lowpass_ * 0.13962634; // 8 degrees max
+        cmd_vel_.linear.x = ( joy_X_lowpass_ * MAX_METERS_PER_SEC ); // 0.04m/s max
+        cmd_vel_.linear.y = ( joy_Y_lowpass_ * MAX_METERS_PER_SEC ); // 0.04m/s max
+        cmd_vel_.angular.z = ( joy_Z_lowpass_ * MAX_RADIANS_PER_SEC ); // 0.52359rad/s max
     }
 }
 

@@ -58,4 +58,7 @@ class HexapodTeleopJoystick
         void joyCallback( const sensor_msgs::Joy::ConstPtr &joy );
         ros::NodeHandle nh_;
         ros::Subscriber joy_sub_;
+        double joy_X_lowpass_;
+        double joy_Y_lowpass_;
+        double joy_Z_lowpass_;
 };
