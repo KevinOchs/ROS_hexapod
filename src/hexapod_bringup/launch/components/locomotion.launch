@@ -19,21 +19,21 @@
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" output="screen" />
         <rosparam>
             <!-- Gait Settings -->
-            CYCLE_LENGTH:           50
-            LEG_LIFT_HEIGHT:        40
+            CYCLE_LENGTH:           50.0
+            LEG_LIFT_HEIGHT:        38.0 <!--50.0 is a good high step on PhantomX-->
 
             <!-- Define Leg Measurements in mm -->
             COXA_LENGTH:            52.0
             FEMUR_LENGTH:           65.0
             TIBIA_LENGTH:           133.0
-            TARSUS_LENGTH:          0
+            TARSUS_LENGTH:          0.0
 
             <!-- Define Angle Offsets in Radians - Usually zero -->
-            OFFSET_ANGLE:           0
+            OFFSET_ANGLE:           0.0
 
             <!-- Define Initial Coxa Offsets in Radians -->
             FRONT_COXA_ANGLE:       !degrees 45
-            MID_COXA_ANGLE:         0
+            MID_COXA_ANGLE:         0.0
             REAR_COXA_ANGLE:        !degrees -45
 
             <!-- Define distance in mm from coxa joint to the center-->
@@ -50,17 +50,17 @@
             <!-- Middle Legs is coxa axis to foot -->
             <!-- math to find positions of front and back legs POS_Y = Middle leg start position * cos(45) -->
             <!-- math to find positions of front and back legs POS_X = Middle leg start position * sin(45) -->
-            FRONT_INIT_FOOT_POS_X:  104.0
-            FRONT_INIT_FOOT_POS_Y:  104.0
+            FRONT_INIT_FOOT_POS_X:  98.0
+            FRONT_INIT_FOOT_POS_Y:  98.0
 
             MID_INIT_FOOT_POS_X:    0.0
-            MID_INIT_FOOT_POS_Y:    147.00
+            MID_INIT_FOOT_POS_Y:    141.00
 
-            REAR_INIT_FOOT_POS_X:   -104.0
-            REAR_INIT_FOOT_POS_Y:   104.0
+            REAR_INIT_FOOT_POS_X:   -98.0
+            REAR_INIT_FOOT_POS_Y:   98.0
 
             <!-- Distance from ground plane to femur rotation pivot -->
-            ALL_FOOT_INIT_Z:        30.0
+            ALL_FOOT_INIT_Z:        45.0
         </rosparam>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 </launch>

@@ -18,7 +18,7 @@ add_library( dynamixel src/usb2ax/dynamixel.cpp )
 target_link_libraries( dynamixel dxl_hal )
 
 add_library( control src/control.cpp )
-add_dependencies( control hexapod_msgs_generate_messages_cpp )
+add_dependencies( control hexapod_msgs_generate_messages_cpp um7_generate_messages_cpp )
 
 add_library( gait src/gait.cpp )
 add_dependencies( gait hexapod_msgs_generate_messages_cpp )

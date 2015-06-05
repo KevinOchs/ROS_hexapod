@@ -33,6 +33,8 @@
 
 #include <math.h>
 #include <ros/ros.h>
+//#include <std_srvs/Empty.h> //Phidgets IMU
+#include "um7/Reset.h" //CHR-UM7 IMU
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Imu.h>
@@ -61,6 +63,7 @@ class Control
         void setPrevHexActiveState( bool state );
         bool getPrevHexActiveState( void );
         void publishJointStates( const hexapod_msgs::LegsJoints &legs, const hexapod_msgs::BodyJoint &body, const hexapod_msgs::HeadJoint &head );
+        void imuZeroGyros( void );
         sensor_msgs::JointState joint_state_;
         geometry_msgs::Twist cmd_vel_;
         hexapod_msgs::RootJoint base_;
@@ -74,6 +77,8 @@ class Control
         ros::Publisher joint_state_pub_;
         //ros::ServiceClient imu_calibrate_; //Phidgets IMU
         //std_srvs::Empty calibrate_; //Phidgets IMU
+        ros::ServiceClient imu_zero_gyros_;
+        um7::Reset zero_gyros_;
     private:
         bool imu_init_stored_;
         double imu_roll_lowpass_;

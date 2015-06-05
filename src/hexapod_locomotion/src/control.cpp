@@ -85,9 +85,14 @@ Control::Control( void )
     imu_sub_ = nh_.subscribe<sensor_msgs::Imu>( "imu/data", 1, &Control::imuCallback, this );
     sounds_pub_ = nh_.advertise<hexapod_msgs::Sounds>( "sounds", 1 );
     joint_state_pub_ = nh_.advertise<sensor_msgs::JointState>( "joint_states", 50 );
+
     // Ping the imu to re-calibrate
     //imu_calibrate_ = nh_.serviceClient<std_srvs::Empty>("imu/calibrate"); //Phidgets IMU
     //imu_calibrate_.call( calibrate_ ); //Phidgets IMU
+
+    // Setup UM7 zero gyro request and client
+    zero_gyros_.request.zero_gyros = true;
+    imu_zero_gyros_ = nh_.serviceClient<um7::Reset>("reset");
 }
 
 //==============================================================================
@@ -337,5 +342,14 @@ void Control::imuCallback( const sensor_msgs::ImuConstPtr &imu_msg )
             }
         }
     }
+}
+
+//==============================================================================
+// IMU callback to zero gyro readings. To be called when hex is stationary.
+//==============================================================================
+
+void Control::imuZeroGyros( void )
+{
+    imu_zero_gyros_.call( zero_gyros_ );
 }
 

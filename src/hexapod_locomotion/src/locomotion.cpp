@@ -51,7 +51,7 @@ int main( int argc, char **argv )
 
     // Establish initial leg positions for default pose in robot publisher
     ik.calculateIK( control.feet_, control.body_, &control.legs_ );
-    
+
     ros::AsyncSpinner spinner( 2 ); // Using 2 threads
     spinner.start();
     ros::Rate loop_rate( 1000 ); // 1000 hz
@@ -62,7 +62,7 @@ int main( int argc, char **argv )
         if( control.getHexActiveState() == true && control.getPrevHexActiveState() == false )
         {
             ROS_INFO("Hexapod wants to stand up.");
-            while( control.body_.z < 75 )
+            while( control.body_.z < 45.0 )
             {
                 control.body_.z++;
 
@@ -95,7 +95,7 @@ int main( int argc, char **argv )
         // Shutting down hex so let us do a gradual sit down and turn off torque
         if( control.getHexActiveState() == false && control.getPrevHexActiveState() == true )
         {
-            while( control.body_.z > 0 )
+            while( control.body_.z > 0.0 )
             {
                 control.body_.z--;
 
@@ -116,6 +116,9 @@ int main( int argc, char **argv )
 
             // Locomotion is now shut off
             control.setPrevHexActiveState( false );
+
+            // Ping the IMU to zero the gyro readings
+            control.imuZeroGyros();
         }
 
         if( control.getHexActiveState() == false && control.getPrevHexActiveState() == false )
