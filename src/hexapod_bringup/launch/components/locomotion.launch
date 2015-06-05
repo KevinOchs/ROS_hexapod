@@ -60,7 +60,7 @@
             REAR_INIT_FOOT_POS_Y:   98.0
 
             <!-- Distance from ground plane to femur rotation pivot -->
-            ALL_FOOT_INIT_Z:        45.0
+            ALL_FOOT_INIT_Z:        30.0
         </rosparam>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 </launch>
