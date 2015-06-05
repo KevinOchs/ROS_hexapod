@@ -280,7 +280,8 @@ void Control::imuOverrideCallback( const hexapod_msgs::StateConstPtr &imu_overri
 
 void Control::imuCallback( const sensor_msgs::ImuConstPtr &imu_msg )
 {
-    if( imu_override_.active == false )
+    if ( false ) //TODO: Temporary Disable
+    //if( imu_override_.active == false )
     {
         const geometry_msgs::Vector3 &lin_acc = imu_msg->linear_acceleration;
 

@@ -12,8 +12,8 @@
     </node>
     <node name="Hexapod_Teleop_Joystick" pkg="hexapod_teleop_joystick" type="hexapod_teleop_joystick" />
         <rosparam>
-            MAX_METERS_PER_SEC: 0.0964
-            MAX_RADIANS_PER_SEC: !degrees 25.069
+            MAX_METERS_PER_SEC: 0.111
+            MAX_RADIANS_PER_SEC: !degrees 29.79
         </rosparam>
     <node name="Hexapod_Odometry" pkg="hexapod_odometry" type="hexapod_odometry" />
     <node name="Hexapod_Locomotion" pkg="hexapod_locomotion" type="hexapod_locomotion" output="screen" />

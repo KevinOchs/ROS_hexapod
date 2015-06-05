@@ -84,7 +84,7 @@
       <rosparam param="imu0_config">[false, false, true,
                                      true, true, false,
                                      false, false, false,
-                                     false, false, false,
+                                     true, true, true,
                                      false, false, false]</rosparam>
 
       <!-- The best practice for including new sensors in robot_localization's state estimation nodes is to pass in velocity
@@ -111,11 +111,11 @@
            that the relative parameter doesn't cause the measurement to be converted to a velocity before integrating it. If
            you simply want your measurements to start at 0 for a given sensor, set this to true. -->
       <param name="odom0_relative" value="true"/>
-      <param name="imu0_relative" value="true"/>
+      <param name="imu0_relative" value="false"/>
 
       <!-- If we're including accelerations in our state estimate, then we'll probably want to remove any acceleration that
            is due to gravity for each IMU. If you don't want to, then set this to false. Defaults to false if unspecified. -->
-      <param name="imu0_remove_gravitational_acceleration" value="true"/>
+      <param name="imu0_remove_gravitational_acceleration" value="false"/>
 
       <!-- If you're having trouble, try setting this to true, and then echo the /diagnostics_agg topic to see
            if the node is unhappy with any settings or data. -->

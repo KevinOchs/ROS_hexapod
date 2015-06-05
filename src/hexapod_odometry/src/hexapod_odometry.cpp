@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 
     HexapodOdometry hexapodOdometry;
     tf::TransformBroadcaster odom_broadcaster;
-    ros::AsyncSpinner spinner( 1 ); // Using 1 thread
+    ros::AsyncSpinner spinner( 3 ); // Using 3 threads
     spinner.start();
 
     double x = 0.0;
