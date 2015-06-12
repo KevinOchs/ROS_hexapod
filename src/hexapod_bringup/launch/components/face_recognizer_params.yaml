@@ -1,0 +1,59 @@
+# this string allows to change the path to the Haar classifier model
+# string
+# data_directory: path_to_data -> please change this parameter in the launch file
+
+# this flag enables or disables the face recognition step
+# bool
+enable_face_recognition: true
+
+# this list specifies the persons who shall be recognized by the face recognizer, comment out this line to avoid any specification at startup
+# string[] e.g. ['albert', 'bernhard', 'caesar']
+identification_labels_to_recognize: ['renee','r3n33','r3n33_rocks']
+
+
+# metric for nearest neighbor search in face space: 0 = Euclidean, 1 = Mahalanobis, 2 = Mahalanobis Cosine
+# int
+metric: 1
+
+# enables some debug outputs
+# bool
+debug: false
+
+#specifies subspace algorithm: 0 = Fisherfaces, 1 = Eigenfaces, 2 = LDA2D, 3 = PCA2D (attention: choices 0 and 1 work with a single person in the training data, options 2 and 3 will cause a crash of the program if you do not train at least 2 different people)
+# int
+recognition_method: 1
+
+
+# is unknown threshold supposed to be utilized: true = use unknown threshold, false = do not use threshold
+# bool
+use_unknown_thresh: true
+
+# use depth
+use_depth: true
+
+# display timing information
+# bool
+display_timing: false
+
+# parameters for face image normalization
+
+# dimension of normalized image
+# int
+norm_size: 100
+
+# toggle illumination compensation
+# bool
+norm_illumination: true
+
+# toggle 3D face alignement
+# bool
+norm_align: false
+
+# toggle processing for extreme conditions
+# bool
+norm_extreme_illumination: false
+
+# set dimension of features ( default )
+# bool
+feature_dimension: 15
+

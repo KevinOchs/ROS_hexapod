@@ -7,8 +7,8 @@
     </include>
     <!-- openni2_camera parameters used on ODROID XU3 -->
     <param name="/camera/driver/depth_registration" value="true" />
-    <param name="/camera/driver/data_skip" value="10" /> <!-- 0 is default, 10 will drop 9/10 frames to give the CPU some relief -->
-    <param name="/camera/driver/color_mode" value="6" /> <!-- 5 is default -->
+    <param name="/camera/driver/data_skip" value="5" /> <!-- 0 is default, 10 will drop 9/10 frames to give the CPU some relief -->
+    <param name="/camera/driver/color_mode" value="6" /> <!-- 5 is default, 6 is 15Hz with modified openni2_camera -->
     <param name="/camera/driver/depth_mode" value="5" /> <!-- 5 is default -->
 
     <include file="$(find hexapod_bringup)/launch/components/imu.launch" />
@@ -16,5 +16,6 @@
     <include file="$(find hexapod_bringup)/launch/components/depth_laserscan.launch" />
     <include file="$(find hexapod_bringup)/launch/components/robot_localization_ekf.launch" />
     <include file="$(find hexapod_bringup)/launch/components/rtabmap.launch" />
+    <include file="$(find hexapod_bringup)/launch/components/cob_people_detection.launch" />
 </launch>
 
