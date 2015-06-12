@@ -7,13 +7,15 @@
 
 This is my implementation of a hexapod functioning in the ROS framework. It is still very much a work in progress and I am still actively developing it. Its current capabilities are up to 2D mapping its environment. Full navigation stack compliance will be pushed up in mid-May 2015.
 
+Gait style is a simple sinusoidal tripod gait. I chose it due to its simplicity and smooth transitions between steps.
+
 * Author: Kevin M. Ochs
 * Contributor: Renée Love
 
 ## 2. Expected Hardware
 
 * Primesense Sensor or Asus Xtion
-* IMU (Current master branch uses a Phidgets 3/3/3 Spatial
+* IMU (Current master branch uses a Phidgets 3/3/3 Spatial. Current PhantomX branch uses CHR-UM7)
 
 ## 3. Dependencies
 
@@ -26,8 +28,13 @@ sudo apt-get install ros-indigo-openni2-launch
 sudo apt-get install ros-indigo-depthimage-to-laserscan
 sudo apt-get install ros-indigo-joystick-drivers
 sudo apt-get install ros-indigo-imu-filter-madgwick
-sudo apt-get install ros-indigo-gmapping
+sudo apt-get install ros-indigo-robot-localization
+sudo apt-get install ros-indigo-rtabmap
+sudo apt-get install ros-indigo-rtabmap-ros
+sudo apt-get install ros-indigo-robot-state-publisher
 sudo apt-get install libusb-1.0-0-dev
+cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/cob_people_perception.git
+cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/cob_perception_common.git
 ```
 
 **_Joystick_**
@@ -83,3 +90,4 @@ Small video of Golem research platform and IMU testing.
 
 Renée Love's odometry test video using the phantomX.
 [![ScreenShot](http://img.youtube.com/vi/VYBAM0MrvWI/0.jpg)](https://www.youtube.com/watch?v=VYBAM0MrvWI)
+
