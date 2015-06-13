@@ -50,14 +50,14 @@
             <!-- Middle Legs is coxa axis to foot -->
             <!-- math to find positions of front and back legs POS_Y = Middle leg start position * cos(45) -->
             <!-- math to find positions of front and back legs POS_X = Middle leg start position * sin(45) -->
-            FRONT_INIT_FOOT_POS_X:  98.0
-            FRONT_INIT_FOOT_POS_Y:  98.0
+            FRONT_INIT_FOOT_POS_X:  104.0
+            FRONT_INIT_FOOT_POS_Y:  104.0
 
             MID_INIT_FOOT_POS_X:    0.0
-            MID_INIT_FOOT_POS_Y:    141.00
+            MID_INIT_FOOT_POS_Y:    147.00
 
-            REAR_INIT_FOOT_POS_X:   -98.0
-            REAR_INIT_FOOT_POS_Y:   98.0
+            REAR_INIT_FOOT_POS_X:   -104.0
+            REAR_INIT_FOOT_POS_Y:   104.0
 
             <!-- Distance from ground plane to femur rotation pivot -->
             ALL_FOOT_INIT_Z:        30.0
