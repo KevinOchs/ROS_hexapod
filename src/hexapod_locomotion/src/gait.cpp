@@ -46,6 +46,7 @@ Gait::Gait( void )
 {
     ros::param::get( "CYCLE_LENGTH", CYCLE_LENGTH );
     ros::param::get( "LEG_LIFT_HEIGHT", LEG_LIFT_HEIGHT );
+    ros::param::get( "MAX_LEG_LIFT_HEIGHT", MAX_LEG_LIFT_HEIGHT );
     cycle_leg_number_[RF] = 0;
     cycle_leg_number_[LM] = 0;
     cycle_leg_number_[RR] = 0;
@@ -77,7 +78,7 @@ void Gait::cyclePeriod( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetP
         {
             feet->foot[leg_index].x = -base.x * period_distance;
             feet->foot[leg_index].y = -base.y * period_distance;
-            feet->foot[leg_index].z = LEG_LIFT_HEIGHT * period_height;
+            feet->foot[leg_index].z = leg_lift_height_ * period_height;
             feet->foot[leg_index].yaw = -base.yaw * period_distance;
         }
         // Moves legs backward pushing the body forward
@@ -96,8 +97,17 @@ void Gait::cyclePeriod( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetP
 // Gait Sequencing
 //=============================================================================
 
-void Gait::gaitCycle( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetPositions *feet )
+void Gait::gaitCycle( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetPositions *feet, const hexapod_msgs::State &state )
 {
+    if ( state.highStepActive == true )
+    {
+        leg_lift_height_ = MAX_LEG_LIFT_HEIGHT;
+    }
+    else
+    {
+        leg_lift_height_ = LEG_LIFT_HEIGHT;
+    }
+
     smooth_base_.x = base.x * 0.05 + ( smooth_base_.x * ( 1.0 - 0.05 ) );
     smooth_base_.y = base.y * 0.05 + ( smooth_base_.y * ( 1.0 - 0.05 ) );
     smooth_base_.yaw = base.yaw * 0.05 + ( smooth_base_.yaw * ( 1.0 - 0.05 ) );

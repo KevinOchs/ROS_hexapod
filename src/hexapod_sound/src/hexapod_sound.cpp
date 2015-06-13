@@ -74,6 +74,21 @@ void HexapodSound::soundsCallback( const hexapod_msgs::SoundsConstPtr &sounds_ms
         }
     }
 
+    if( sounds_msg->high_step == true )
+    {
+        if( sounds_.high_step != true )
+        {
+            sounds_.high_step = true;
+        }
+    }
+
+    if( sounds_msg->regular_step == true )
+    {
+        if( sounds_.regular_step != true )
+        {
+            sounds_.regular_step = true;
+        }
+    }
 }
 
 int main(int argc, char** argv)
@@ -127,6 +142,22 @@ int main(int argc, char** argv)
             hexapodSound.sound_pub_.publish( hexapodSound.sound_req_ );
             ros::Duration( 3 ).sleep();
             hexapodSound.sounds_.shut_down = false;
+        }
+
+        if( hexapodSound.sounds_.high_step == true )
+        {
+            hexapodSound.sound_req_.arg = "/home/odroid/ROS_hexapod/src/hexapod_sound/sounds/high_step_mode_activated.ogg";
+            hexapodSound.sound_pub_.publish( hexapodSound.sound_req_ );
+            ros::Duration( 3 ).sleep();
+            hexapodSound.sounds_.high_step = false;
+        }
+
+        if( hexapodSound.sounds_.regular_step == true )
+        {
+            hexapodSound.sound_req_.arg = "/home/odroid/ROS_hexapod/src/hexapod_sound/sounds/default_step_mode_activated.ogg";
+            hexapodSound.sound_pub_.publish( hexapodSound.sound_req_ );
+            ros::Duration( 3 ).sleep();
+            hexapodSound.sounds_.regular_step = false;
         }
 
         loop_rate.sleep();

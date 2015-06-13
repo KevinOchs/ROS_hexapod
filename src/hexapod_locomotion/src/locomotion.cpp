@@ -62,7 +62,7 @@ int main( int argc, char **argv )
         if( control.getHexActiveState() == true && control.getPrevHexActiveState() == false )
         {
             ROS_INFO("Hexapod wants to stand up.");
-            while( control.body_.z < 45.0 )
+            while( control.body_.z < 60.0 )
             {
                 control.body_.z++;
 
@@ -83,7 +83,7 @@ int main( int argc, char **argv )
         if( control.getHexActiveState() == true && control.getPrevHexActiveState() == true )
         {
             // Gait Sequencer
-            gait.gaitCycle( control.base_, &control.feet_ );
+            gait.gaitCycle( control.base_, &control.feet_, control.state_ );
 
             // IK solver for legs and body orientation
             ik.calculateIK( control.feet_, control.body_, &control.legs_ );
@@ -103,7 +103,7 @@ int main( int argc, char **argv )
                 control.body_.z--;
 
                 // Gait Sequencer called to make sure we are on all six feet
-                gait.gaitCycle( control.base_, &control.feet_ );
+                gait.gaitCycle( control.base_, &control.feet_, control.state_ );
 
                 // IK solver for legs and body orientation
                 ik.calculateIK( control.feet_, control.body_, &control.legs_ );

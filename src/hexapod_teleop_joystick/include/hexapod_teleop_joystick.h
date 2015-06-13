@@ -48,6 +48,7 @@ class HexapodTeleopJoystick
         geometry_msgs::Twist cmd_vel_;
         double MAX_METERS_PER_SEC;
         double MAX_RADIANS_PER_SEC;
+        double MAX_BODY_Z;
         ros::Publisher cmd_vel_pub_;
         ros::Publisher base_pub_;
         ros::Publisher body_pub_;

@@ -53,9 +53,11 @@ HexapodTeleopJoystick::HexapodTeleopJoystick( void )
     cmd_vel_.angular.y = 0.0;
     cmd_vel_.angular.z = 0.0;
     state_.active = false;
+    state_.highStepActive = false;
     imu_override_.active = false;
     ros::param::get( "MAX_METERS_PER_SEC", MAX_METERS_PER_SEC );
     ros::param::get( "MAX_RADIANS_PER_SEC", MAX_RADIANS_PER_SEC );
+    ros::param::get( "MAX_BODY_Z", MAX_BODY_Z );
     joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 5, &HexapodTeleopJoystick::joyCallback, this);
     base_pub_ = nh_.advertise<hexapod_msgs::RootJoint>("base", 100);
     body_pub_ = nh_.advertise<hexapod_msgs::BodyJoint>("body", 100);
@@ -71,10 +73,39 @@ HexapodTeleopJoystick::HexapodTeleopJoystick( void )
 
 void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
 {
+    /*
+    DS4 Controller Input mapping:
+
+    axes[0] = Left Stick Horizontal
+    axes[1] = Left Stick Vertical
+    axes[2] = Right Stick Horizontal
+    axes[3] = L2 Trigger
+    axes[4] = R2 Trigger
+    axes[5] = Right Stick Vertical
+    axes[6] = D-Pad Left and Right
+    axes[7] = D-Pad Up and Down
+    buttons[0] = Square
+    buttons[1] = X
+    buttons[2] = Circle
+    buttons[3] = Triangle
+    buttons[4] = L1 Trigger
+    buttons[5] = R1 Trigger
+    buttons[6] = L2 Trigger
+    buttons[7] = R2 Trigger
+    buttons[8] = Share Button
+    buttons[9] = Options Button
+    buttons[10] = Left Stick Push
+    buttons[11] = Right Stick Push
+    buttons[12] = PS Button
+    buttons[13] = Trackpad Push
+    */
+
+    // Low pass filter joystick movement axes
     joy_X_lowpass_ = joy->axes[1] * 0.001 + ( joy->axes[1] * ( 1.0 - 0.001 ) );
     joy_Y_lowpass_ = joy->axes[0] * 0.001 + ( joy->axes[0] * ( 1.0 - 0.001 ) );
     joy_Z_lowpass_ = joy->axes[2] * 0.001 + ( joy->axes[2] * ( 1.0 - 0.001 ) );
 
+    // Activate locomotion with Triangle button
     if ( joy->buttons[3] == 1 )
     {
         if ( state_.active == false)
@@ -83,6 +114,7 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         }
     }
 
+    // Deactivate locomotion with Square button
     if ( joy->buttons[0] == 1 )
     {
         if ( state_.active == true)
@@ -91,7 +123,26 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         }
     }
 
-    // Body shift L1 Button for testing on DS4 controller
+    // Toggle Leg Lift Height with Circle button
+    if ( joy->buttons[2] == 1 )
+    {
+        if ( state_.highStepActive == false )
+        {
+            state_.highStepActive = true;
+        } 
+        else
+        {
+            state_.highStepActive = false;
+        }
+    }
+
+    // Return early if we are not to be moving the body and base
+    if ( state_.active == false )
+    {
+        return; 
+    }
+
+    // Body shift L1 Trigger
     if ( joy->buttons[4] == 1 )
     {
         imu_override_.active = true;
@@ -105,7 +156,7 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         imu_override_.active = false;
     }
 
-    // Travelling ( 8cm/s ) 0.078m/s  0.407rad/s
+    // Travelling
     if ( joy->buttons[4] != 1 )
     {
         base_.x = -joy_X_lowpass_ * 40.0; // 40 mm max

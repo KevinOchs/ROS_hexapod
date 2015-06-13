@@ -37,6 +37,7 @@
 #include <hexapod_msgs/RootJoint.h>
 #include <hexapod_msgs/FeetPositions.h>
 #include <hexapod_msgs/RootJoint.h>
+#include <hexapod_msgs/State.h>
 
 //=============================================================================
 // Define structs and classes for gait system
@@ -46,7 +47,7 @@ class Gait
 {
     public:
         Gait( void );
-        void gaitCycle( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetPositions *feet );
+        void gaitCycle( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetPositions *feet, const hexapod_msgs::State &state );
     private:
         void cyclePeriod( const hexapod_msgs::RootJoint &base, hexapod_msgs::FeetPositions *feet );
         hexapod_msgs::RootJoint smooth_base_;
@@ -55,8 +56,10 @@ class Gait
         int CYCLE_LENGTH;         // Number of steps in cycle
         int cycle_period_;        // Current period in cycle
         int cycle_leg_number_[6]; // Leg order in cycle of the leg
-        int LEG_LIFT_HEIGHT;      // Height of a leg cycle
         int extra_gait_cycle_;    // Forcing some extra timed cycles
+        double leg_lift_height_;  // Current leg lift height in gate
+        double LEG_LIFT_HEIGHT;
+        double MAX_LEG_LIFT_HEIGHT;
 };
 
 #endif // GAIT_H_

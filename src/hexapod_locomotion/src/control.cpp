@@ -216,11 +216,34 @@ void Control::headCallback( const hexapod_msgs::HeadJointConstPtr &head_msg )
 }
 
 //==============================================================================
-// Active state callback - currently simple on/off - stand/sit
+// Active state callback
 //==============================================================================
 
 void Control::stateCallback( const hexapod_msgs::StateConstPtr &state_msg )
 {
+    if ( state_msg->highStepActive == true )
+    {
+        if ( state_.highStepActive == false )
+        {
+            ROS_WARN( "Setting maximum leg lift height. Velocity timings may differ." );
+            sounds_.high_step = true;
+            sounds_pub_.publish( sounds_ );
+            sounds_.high_step = false;
+        }
+    }
+
+    if ( state_msg->highStepActive == false )
+    {
+        if ( state_.highStepActive == true )
+        {
+            ROS_INFO( "Setting regular leg lift height." );
+            sounds_.regular_step = true;
+            sounds_pub_.publish( sounds_ );
+            sounds_.regular_step = false;
+        }
+    }
+    state_.highStepActive = state_msg->highStepActive;
+
     if(state_msg->active == true )
     {
         if( getHexActiveState() == false )

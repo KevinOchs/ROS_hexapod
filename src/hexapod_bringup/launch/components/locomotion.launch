@@ -20,7 +20,8 @@
         <rosparam>
             <!-- Gait Settings -->
             CYCLE_LENGTH:           50.0
-            LEG_LIFT_HEIGHT:        38.0 <!--50.0 is a good high step on PhantomX-->
+            LEG_LIFT_HEIGHT:        38.0
+            MAX_LEG_LIFT_HEIGHT:    50.0
 
             <!-- Define Leg Measurements in mm -->
             COXA_LENGTH:            52.0

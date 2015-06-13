@@ -1,1 +1,2 @@
 bool active
+bool highStepActive
