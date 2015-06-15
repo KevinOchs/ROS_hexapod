@@ -5,7 +5,7 @@
 
 ## 1. Documentation
 
-This is my implementation of a hexapod functioning in the ROS framework. It is still very much a work in progress and I am still actively developing it. Its current capabilities are up to 2D mapping its environment. Full navigation stack compliance will be pushed up in mid-May 2015.
+This is my implementation of a hexapod functioning in the ROS framework. It is still very much a work in progress and I am still actively developing it. Its current capabilities are up to 2D mapping its environment. Full navigation stack compliance will be pushed up in mid-June 2015.
 
 Gait style is a simple sinusoidal tripod gait. I chose it due to its simplicity and smooth transitions between steps.
 
@@ -33,6 +33,15 @@ sudo apt-get install ros-indigo-rtabmap
 sudo apt-get install ros-indigo-rtabmap-ros
 sudo apt-get install ros-indigo-robot-state-publisher
 sudo apt-get install libusb-1.0-0-dev
+```
+Optional ( modified openni2_camera for better performance on ODROID XU3 ) 
+```
+cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/openni2_camera.git
+```
+```
+Optional ( cob_people_detection ) still beta.
+```
+sudo apt-get install ros-indigo-bfl
 cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/cob_people_perception.git
 cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/cob_perception_common.git
 ```
@@ -68,6 +77,11 @@ For ODROID XU3 please add these compiler optimizations after first build.
 Change: CMAKE_CXX_FLAGS:STRING=-O3 -pipe -march=armv7-a -mcpu=cortex-a9 -mfloat-abi=hard
 ```
 
+Dont forget to add the below after you run catkin_make
+
+```
+source ~/ROS_hexapod/devel/setup.bash
+```
 
 ## Pictures
 
@@ -90,4 +104,3 @@ Small video of Golem research platform and IMU testing.
 
 Renée Love's odometry test video using the phantomX.
 [![ScreenShot](http://img.youtube.com/vi/VYBAM0MrvWI/0.jpg)](https://www.youtube.com/watch?v=VYBAM0MrvWI)
-
