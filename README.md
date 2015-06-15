@@ -38,7 +38,6 @@ Optional ( modified openni2_camera for better performance on ODROID XU3 )
 ```
 cd ~/ROS_hexapod/src/ && git clone https://github.com/r3n33/openni2_camera.git
 ```
-```
 Optional ( cob_people_detection ) still beta.
 ```
 sudo apt-get install ros-indigo-bfl
