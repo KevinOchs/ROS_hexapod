@@ -70,6 +70,9 @@ int main( int argc, char **argv )
 
                 // Commit new positions and broadcast over USB2AX
                 servoDriver.transmitServoPositions( control.legs_, control.head_ );
+
+                // A small delay to sit down slowly
+                loop_rate.sleep();
             }
             control.setPrevHexActiveState( true );
             ROS_INFO("Hexapod standing up.");
@@ -106,6 +109,9 @@ int main( int argc, char **argv )
 
                 // Commit new positions and broadcast over USB2AX
                 servoDriver.transmitServoPositions( control.legs_, control.head_ );
+
+                // A small delay to sit down slowly
+                loop_rate.sleep();
             }
 
             // Release torque
