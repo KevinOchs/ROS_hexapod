@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Full bringup no visual nodes launch file ( Normal use, visual ran on remote desktop ) -->
+
+<launch>
+    <arg name="config" default="phantomx"/>
+    <!-- Launching sound first since some packages have initial sounds -->
+    <!-- include file="$(find hexapod_bringup)/launch/components/sounds.launch" / -->
+    <include file="$(find hexapod_bringup)/launch/hexapod_simple.launch">
+      <arg name="config" value="$(arg config)"/>
+    </include>
+</launch>

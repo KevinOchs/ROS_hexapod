@@ -134,9 +134,12 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
         joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
         joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].tibia;
         i++;
-        joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
-        joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].tarsus;
-        i++;
+        if ( NUMBER_OF_LEG_JOINTS >= 4 )  // Only output tarus on 4dof (or more)
+        {
+            joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+            joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].tarsus;
+            i++;
+        }    
     }
 
     for( int head_index = 0; head_index < NUMBER_OF_HEAD_JOINTS; head_index++ )
