@@ -41,6 +41,7 @@ Control::Control( void )
     ros::param::get( "BODY_MAX_ROLL", BODY_MAX_ROLL );
     ros::param::get( "BODY_MAX_PITCH", BODY_MAX_PITCH );
     ros::param::get( "HEAD_MAX_PAN", HEAD_MAX_PAN );
+    ros::param::get( "HEAD_MAX_TILT", HEAD_MAX_TILT );
     ros::param::get( "CYCLE_MAX_TRAVEL", CYCLE_MAX_TRAVEL );
     ros::param::get( "CYCLE_MAX_YAW", CYCLE_MAX_YAW );
     ros::param::get( "STANDING_BODY_HEIGHT", STANDING_BODY_HEIGHT );
@@ -142,10 +143,11 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
         }    
     }
 
+    // Need to figure out how different head joints are used.
     for( int head_index = 0; head_index < NUMBER_OF_HEAD_JOINTS; head_index++ )
     {
         joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
-        joint_state->position[i] = head_.yaw;
+        joint_state->position[i] = ( head_index & 1 ) ? head_.pitch : head_.yaw;
         i++;
     }
     joint_state_pub_.publish( *joint_state );
@@ -210,6 +212,7 @@ void Control::headCallback( const geometry_msgs::AccelStampedConstPtr &head_scal
     if ( time_delta < 1.0 ) // Don't move if timestamp is stale over a second
     {
         head_.yaw = head_scalar_msg->accel.angular.z * HEAD_MAX_PAN;
+        head_.pitch = head_scalar_msg->accel.angular.y * HEAD_MAX_TILT;
     }
 }
 

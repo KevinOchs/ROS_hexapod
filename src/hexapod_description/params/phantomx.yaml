@@ -49,7 +49,8 @@ BODY_MAX_PITCH: !degrees 8
 STANDING_BODY_HEIGHT: 0.09
 
 # Head (pan) FK maximum rotation
-HEAD_MAX_PAN: !degrees 16
+HEAD_MAX_PAN: !degrees 55
+HEAD_MAX_TILT: !degrees 25
 
 # Body auto levelling parameters
 MAX_BODY_ROLL_COMP: !degrees 12
@@ -87,6 +88,6 @@ SERVOS: {
     '16': {name: coxa_joint_LF, type: AX, id: 19, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 0},
     '17': {name: femur_joint_LF, type: AX, id: 3, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 14},
     '18': {name: tibia_joint_LF, type: AX, id: 5, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees -48},
-    '19': {name: pan_joint, type: AX, id: 21, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 0},
-    '20': {name: tilt_joint, type: AX, id: 22, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 0}
+    '19': {name: pan_joint, type: AX, id: 20, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 0},
+    '20': {name: tilt_joint, type: AX, id: 21, ticks: 1024, center: 512, max_radians: !degrees 300, sign: 1, offset: !degrees 0}
 }

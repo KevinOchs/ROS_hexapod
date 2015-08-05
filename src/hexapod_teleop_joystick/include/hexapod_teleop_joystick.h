@@ -56,4 +56,20 @@ class HexapodTeleopJoystick
         void joyCallback( const sensor_msgs::Joy::ConstPtr &joy );
         ros::NodeHandle nh_;
         ros::Subscriber joy_sub_;
+
+        // Overrideable joystick axes map - needed as not all joysticks map the joysticks to same index in axes array
+        std::vector<int> axes_index_map_;            // Map actual joystick axes to logical lx, ly, rx, ry maybe more later
+
+        // Buttons.  Same as Axis Plus ability to define extra buttons, where beyond first 3 fixed ones can also define the topics...
+        std::vector<int> button_index_map_;          // map the buttons to some logical norm...
+        std::vector<std::string> button_topic_names_;     // Button topic Names
+        std::vector<ros::Publisher> button_pubs_;    // the button publishers
+        std::vector<std_msgs::Bool> button_states_;  // the button state
+
+        // Helper functions to know states of buttons.
+        bool buttonDown(  const sensor_msgs::Joy::ConstPtr &joy, int button_index );             // Is a logically pressed down...
+        bool buttonPressed ( const sensor_msgs::Joy::ConstPtr &joy, int button_index );    // Is button down and previous call not?
+        bool buttonReleased ( const sensor_msgs::Joy::ConstPtr &joy, int button_index );
+
+        std::vector<int> buttons_prev_;              // remember previous state of buttons so we can know when pressed and released.
 };
