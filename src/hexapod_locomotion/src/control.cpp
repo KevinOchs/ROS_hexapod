@@ -143,13 +143,24 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
         }
     }
 
-    // Need to figure out how different head joints are used.
-    for( int head_index = 0; head_index < NUMBER_OF_HEAD_JOINTS; head_index++ )
+    // Now output head joints, the code assumes 0-3 head joints
+    // 1 - Pan (yaw), 2 - tilt (pitch), 3 roll
+    i += ( NUMBER_OF_HEAD_JOINTS - 1 );
+    switch ( NUMBER_OF_HEAD_JOINTS )
     {
-        joint_state->name[i] = servo_names_[i];
-        joint_state->position[i] = ( head_index & 1 ) ? head_.pitch : head_.yaw;
-        i++;
-    }
+        case 3: 
+            joint_state->name[i] = servo_names_[i];
+            joint_state->position[i] = head_.roll;
+            i--;
+        case 2:
+            joint_state->name[i] = servo_names_[i];
+            joint_state->position[i] = head_.pitch;
+            i--;
+        case 1:
+            joint_state->name[i] = servo_names_[i];
+            joint_state->position[i] = head_.yaw;
+    }   
+    
     joint_state_pub_.publish( *joint_state );
 }
 
