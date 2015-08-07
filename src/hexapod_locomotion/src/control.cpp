@@ -126,27 +126,27 @@ void Control::publishJointStates( const hexapod_msgs::LegsJoints &legs, const he
     int i = 0;
     for( int leg_index = 0; leg_index < NUMBER_OF_LEGS; leg_index++ )
     {
-        joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+        joint_state->name[i] = servo_names_[i];
         joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].coxa;
         i++;
-        joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+        joint_state->name[i] = servo_names_[i];
         joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].femur;
         i++;
-        joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+        joint_state->name[i] = servo_names_[i];
         joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].tibia;
         i++;
         if ( NUMBER_OF_LEG_JOINTS >= 4 )  // Only output tarus on 4dof (or more)
         {
-            joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+            joint_state->name[i] = servo_names_[i];
             joint_state->position[i] = servo_orientation_[i] * legs.leg[leg_index].tarsus;
             i++;
-        }    
+        }
     }
 
     // Need to figure out how different head joints are used.
     for( int head_index = 0; head_index < NUMBER_OF_HEAD_JOINTS; head_index++ )
     {
-        joint_state->name[i] = static_cast<std::string>( servo_names_[i] );
+        joint_state->name[i] = servo_names_[i];
         joint_state->position[i] = ( head_index & 1 ) ? head_.pitch : head_.yaw;
         i++;
     }
