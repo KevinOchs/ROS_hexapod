@@ -81,6 +81,7 @@ void HexapodTeleopJoystick::joyCallback( const sensor_msgs::Joy::ConstPtr &joy )
         body_scalar_.accel.angular.y = -joy->axes[1];
         head_scalar_.header.stamp = current_time;
         head_scalar_.accel.angular.z = joy->axes[2];
+        head_scalar_.accel.angular.y = joy->axes[3];
     }
     else
     {

@@ -128,5 +128,8 @@ int main( int argc, char **argv )
         }
         loop_rate.sleep();
     }
+    
+    // Make sure servos are off on exit
+    servoDriver.freeServos();
     return 0;
 }
